@@ -1,0 +1,4 @@
+package transforms
+
+func ApplyArticles() {
+}
