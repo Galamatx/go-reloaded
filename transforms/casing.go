@@ -91,11 +91,12 @@ func ApplyCasing(text string) string {
 					applied := 0
 					for j := i - 1; j >= 0 && applied < count; j-- {
 						if words[j] != "" {
-							if word == "(up," {
+							switch word {
+							case "(up,":
 								words[j] = strings.ToUpper(words[j])
-							} else if word == "(low," {
+							case "(low,":
 								words[j] = strings.ToLower(words[j])
-							} else if word == "(cap," {
+							case "(cap,":
 								words[j] = safeCap(words[j])
 							}
 							applied++
