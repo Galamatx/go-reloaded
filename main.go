@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go-reloaded/transforms"
 	"os"
 )
 
@@ -21,6 +22,7 @@ func main() {
 	}
 
 	text := string(data)
+	text = transforms.Apply(text)
 
 	err = os.WriteFile(outputFile, []byte(text), 0644)
 	if err != nil {
