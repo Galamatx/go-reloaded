@@ -9,9 +9,10 @@ func ApplyArticles(text string) string {
 		if (word == "a" || word == "A") && i+1 < len(words) {
 			nextWord := words[i+1]
 			if isVowel(nextWord[0]) || nextWord[0] == 'h' || nextWord[0] == 'H' {
-				if word == "a" {
+				switch word {
+				case "a":
 					words[i] = string("an")
-				} else if word == "A" {
+				case "A":
 					words[i] = string("An")
 				}
 			}
