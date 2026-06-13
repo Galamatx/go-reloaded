@@ -6,23 +6,36 @@ import (
 )
 
 func ApplyNumbers(text string) string {
+	text = strings.ReplaceAll(text, "(hex)", " (hex) ")
+	text = strings.ReplaceAll(text, "(bin)", " (bin) ")
+
 	words := strings.Fields(text)
 
 	for i, word := range words {
 		switch word {
 		case "(hex)":
-			{
-				if i > 0 {
-					words[i-1] = strconv.Itoa(hexTOdec(words[i-1]))
-					words[i] = ""
+			prevIndex := i - 1
+			for prevIndex >= 0 && words[prevIndex] == "" {
+				prevIndex--
+			}
+			if prevIndex >= 0 {
+				num, punct := splitTrailingPunct(words[prevIndex])
+				if isHexStr(num) {
+					words[prevIndex] = strconv.Itoa(hexTOdec(num)) + punct
 				}
+				words[i] = ""
 			}
 		case "(bin)":
-			{
-				if i > 0 {
-					words[i-1] = strconv.Itoa(binTOdec(words[i-1]))
-					words[i] = ""
+			prevIndex := i - 1
+			for prevIndex >= 0 && words[prevIndex] == "" {
+				prevIndex--
+			}
+			if prevIndex >= 0 {
+				num, punct := splitTrailingPunct(words[prevIndex])
+				if isBinStr(num) {
+					words[prevIndex] = strconv.Itoa(binTOdec(num)) + punct
 				}
+				words[i] = ""
 			}
 		}
 	}
@@ -34,6 +47,39 @@ func ApplyNumbers(text string) string {
 		}
 	}
 	return strings.Join(result, " ")
+}
+
+func splitTrailingPunct(s string) (string, string) {
+	i := len(s) - 1
+	for i >= 0 && (s[i] == '.' || s[i] == ',' || s[i] == '!' || s[i] == '?' || s[i] == ':' || s[i] == ';') {
+		i--
+	}
+	return s[:i+1], s[i+1:]
+}
+
+func isHexStr(s string) bool {
+	if s == "" {
+		return false
+	}
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		if !(c >= '0' && c <= '9' || c >= 'a' && c <= 'f' || c >= 'A' && c <= 'F') {
+			return false
+		}
+	}
+	return true
+}
+
+func isBinStr(s string) bool {
+	if s == "" {
+		return false
+	}
+	for i := 0; i < len(s); i++ {
+		if s[i] != '0' && s[i] != '1' {
+			return false
+		}
+	}
+	return true
 }
 
 func hexTOdec(hex string) int {
