@@ -81,7 +81,6 @@ func isBinStr(s string) bool {
 	}
 	return true
 }
-
 func hexTOdec(hex string) int {
 	result := 0
 
