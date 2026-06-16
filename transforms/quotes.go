@@ -57,6 +57,22 @@ func cleanQuoteMargins(text string, target string) string {
 				result.WriteString(target)
 				result.WriteRune(' ')
 				i++
+
+				for i < len(runes) && runes[i] == ' ' {
+					i++
+				}
+
+				for i < len(runes) && (runes[i] == '.' || runes[i] == ',' || runes[i] == '!' || runes[i] == '?' || runes[i] == ':' || runes[i] == ';') {
+					s2 := result.String()
+					for len(s2) > 0 && s2[len(s2)-1] == ' ' {
+						s2 = s2[:len(s2)-1]
+					}
+					result.Reset()
+					result.WriteString(s2)
+					result.WriteRune(runes[i])
+					result.WriteRune(' ')
+					i++
+				}
 				open = false
 			}
 		} else {
