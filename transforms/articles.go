@@ -34,8 +34,26 @@ func ApplyArticles(text string) string {
 			continue
 		}
 
+		consonantSoundWords := map[string]bool{
+			"user": true, "university": true, "unique": true, "union": true,
+			"unit": true, "uniform": true, "united": true, "universal": true,
+			"universe": true, "url": true, "european": true, "euro": true,
+			"one": true, "once": true,
+		}
+
+		vowelSoundWords := map[string]bool{
+			"hour": true, "honest": true, "honour": true, "honor": true,
+			"heir": true, "herb": true, "homage": true,
+		}
+
 		var isVowelOrH bool
-		isVowelOrH = isVowel(nextWord[0]) || nextWord[0] == 'h'
+		if consonantSoundWords[nextWord] {
+			isVowelOrH = false
+		} else if vowelSoundWords[nextWord] {
+			isVowelOrH = true
+		} else {
+			isVowelOrH = isVowel(nextWord[0]) || nextWord[0] == 'h'
+		}
 
 		prefix := word[:startIdx]
 		switch {
