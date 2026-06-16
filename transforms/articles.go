@@ -38,7 +38,7 @@ func ApplyArticles(text string) string {
 			"user": true, "university": true, "unique": true, "union": true,
 			"unit": true, "uniform": true, "united": true, "universal": true,
 			"universe": true, "url": true, "european": true, "euro": true,
-			"one": true, "once": true,
+			"one": true, "once": true, "and": true, "or": true, "but": true,
 		}
 
 		vowelSoundWords := map[string]bool{
