@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go-reloaded/transforms"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -22,7 +23,12 @@ func main() {
 	}
 
 	text := string(data)
-	text = transforms.Apply(text)
+	lines := strings.Split(text, "\n")
+	var processed []string
+	for _, line := range lines {
+		processed = append(processed, transforms.Apply(line))
+	}
+	text = strings.Join(processed, "\n")
 
 	err = os.WriteFile(outputFile, []byte(text), 0644)
 	if err != nil {
