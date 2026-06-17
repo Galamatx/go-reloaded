@@ -23,7 +23,7 @@ func main() {
 	}
 
 	text := string(data)
-	lines := strings.Split(text, "\n")
+	lines := strings.Split(strings.ReplaceAll(text, "\r\n", "\n"), "\n")
 	var processed []string
 	for _, line := range lines {
 		processed = append(processed, transforms.Apply(line))
